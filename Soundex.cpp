@@ -35,13 +35,9 @@ std::string performSoundexCalculation(const std::string& name)
             soundex += code;
             prevCode = code;
         }
-        else if (code != '0')
+        if (code == '0')
         {
             prevCode = '0'; 
-        }
-        else
-        {
-            // do nothing
         }
     }
     return soundex;
