@@ -1,36 +1,74 @@
 #include "Soundex.h"
 #include <cctype>
+#include <cstring>
 
-char getSoundexCode(char c) {
+char soundexValue[26] = {'0'};
+
+char getSoundexCode(char c) 
+{
     c = toupper(c);
-    switch (c) {
-        case 'B': case 'F': case 'P': case 'V': return '1';
-        case 'C': case 'G': case 'J': case 'K': case 'Q': case 'S': case 'X': case 'Z': return '2';
-        case 'D': case 'T': return '3';
-        case 'L': return '4';
-        case 'M': case 'N': return '5';
-        case 'R': return '6';
-        default: return '0'; // For A, E, I, O, U, H, W, Y
-    }
+    return soundexValue[c - 'A'];
 }
 
-std::string generateSoundex(const std::string& name) {
-    if (name.empty()) return "";
+void initializeSoundexCode()
+{
+    soundexValue['B' - 'A'] = soundexValue['F' - 'A'] = soundexValue['P' - 'A'] = soundexValue['V' - 'A'] = '1';
+    soundexValue['C' - 'A'] = soundexValue['G' - 'A'] = soundexValue['J' - 'A'] = soundexValue['K' - 'A'] = soundexValue['Q' - 'A'] = soundexValue['S' - 'A'] = soundexValue['X' - 'A'] = soundexValue['z' - 'A'] = '2';
+    soundexValue['D' - 'A'] = soundexValue['T' - 'A'] = '3';
+    soundexValue['L' - 'A'] = '4';
+    soundexValue['M' - 'A'] = soundexValue['N' - 'A'] = '5';
+    soundexValue['R' - 'A'] = '6';
+    soundexValue['H' - 'A'] = soundexValue['W' - 'A'] = soundexValue['Y' - 'A'] = '*';
+}
 
+std::string performSoundexCalculation(const std::string& name)
+{
+    initializeSoundexCode();
     std::string soundex(1, toupper(name[0]));
     char prevCode = getSoundexCode(name[0]);
 
-    for (size_t i = 1; i < name.length() && soundex.length() < 4; ++i) {
+    for (size_t i = 1; i < name.length() && soundex.length() < 4; ++i)
+    {
         char code = getSoundexCode(name[i]);
-        if (code != '0' && code != prevCode) {
-            soundex += code;
-            prevCode = code;
+        if (code != '0' && code != '*')
+        {
+            if (code != prevCode)
+            {
+                soundex += code;
+                prevCode = code;
+            }
+        }
+        else
+        {
+            if (code != '0')
+            {
+               prevCode = '0'; 
+            }
         }
     }
+    return soundex;
+}
 
-    while (soundex.length() < 4) {
+bool checkForEmpty(const std::string& name)
+{
+    return name.empty();
+}
+
+void padSoundex(std::string& soundex)
+{
+    while (soundex.length() < 4) 
+    {
         soundex += '0';
     }
+}
+
+std::string generateSoundex(const std::string& name)
+{
+    if (checkForEmpty(name)) return "";
+
+    std::string soundex = performSoundexCalculation(name);
+
+    padSoundex(soundex);
 
     return soundex;
 }
