@@ -2,7 +2,7 @@
 #include <cctype>
 #include <cstring>
 
-char soundexValue[26] = {'0'};
+char soundexValue[26];
 
 char getSoundexCode(char c) 
 {
@@ -12,13 +12,27 @@ char getSoundexCode(char c)
 
 void initializeSoundexCode()
 {
+    soundexValue['A' - 'A'] = soundexValue['E' - 'A'] = soundexValue['I' - 'A'] = soundexValue['O' - 'A'] = soundexValue['U' - 'A'] = '0';
     soundexValue['B' - 'A'] = soundexValue['F' - 'A'] = soundexValue['P' - 'A'] = soundexValue['V' - 'A'] = '1';
-    soundexValue['C' - 'A'] = soundexValue['G' - 'A'] = soundexValue['J' - 'A'] = soundexValue['K' - 'A'] = soundexValue['Q' - 'A'] = soundexValue['S' - 'A'] = soundexValue['X' - 'A'] = soundexValue['z' - 'A'] = '2';
+    soundexValue['C' - 'A'] = soundexValue['G' - 'A'] = soundexValue['J' - 'A'] = soundexValue['K' - 'A'] = soundexValue['Q' - 'A'] = soundexValue['S' - 'A'] = soundexValue['X' - 'A'] = soundexValue['Z' - 'A'] = '2';
     soundexValue['D' - 'A'] = soundexValue['T' - 'A'] = '3';
     soundexValue['L' - 'A'] = '4';
     soundexValue['M' - 'A'] = soundexValue['N' - 'A'] = '5';
     soundexValue['R' - 'A'] = '6';
     soundexValue['H' - 'A'] = soundexValue['W' - 'A'] = soundexValue['Y' - 'A'] = '*';
+}
+
+void updateSoundex(std::string& soundex, char& code, char& prevCode)
+{
+    if ((code != '0') && (code != '*') && (code != prevCode))
+    {
+        soundex += code;
+        prevCode = code;
+    }
+    if (code == '0')
+    {
+        prevCode = '0'; 
+    }
 }
 
 std::string performSoundexCalculation(const std::string& name)
@@ -30,15 +44,7 @@ std::string performSoundexCalculation(const std::string& name)
     for (size_t i = 1; i < name.length() && soundex.length() < 4; ++i)
     {
         char code = getSoundexCode(name[i]);
-        if ((code != '0') && (code != '*') && (code != prevCode))
-        {
-            soundex += code;
-            prevCode = code;
-        }
-        if (code == '0')
-        {
-            prevCode = '0'; 
-        }
+        updateSoundex(soundex, code, prevCode);
     }
     return soundex;
 }
