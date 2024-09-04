@@ -24,7 +24,8 @@ void initializeSoundexCode()
 
 void updateSoundex(std::string& soundex, char& code, char& prevCode)
 {
-    if ((code != '0') && (code != '*') && (code != prevCode))
+    bool isProperCode = (code != '0') && (code != '*') && (code != prevCode);
+    if (isProperCode)
     {
         soundex += code;
         prevCode = code;
