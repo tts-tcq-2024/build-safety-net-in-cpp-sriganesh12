@@ -30,20 +30,18 @@ std::string performSoundexCalculation(const std::string& name)
     for (size_t i = 1; i < name.length() && soundex.length() < 4; ++i)
     {
         char code = getSoundexCode(name[i]);
-        if (code != '0' && code != '*')
+        if ((code != '0') && (code != '*') && (code != prevCode))
         {
-            if (code != prevCode)
-            {
-                soundex += code;
-                prevCode = code;
-            }
+            soundex += code;
+            prevCode = code;
+        }
+        else if (code != '0')
+        {
+            prevCode = '0'; 
         }
         else
         {
-            if (code != '0')
-            {
-               prevCode = '0'; 
-            }
+            // do nothing
         }
     }
     return soundex;
