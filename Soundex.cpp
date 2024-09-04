@@ -29,7 +29,7 @@ void updateSoundex(std::string& soundex, char& code, char& prevCode)
         soundex += code;
         prevCode = code;
     }
-    if (code == '0')
+    else if (code == '0')
     {
         prevCode = '0'; 
     }
