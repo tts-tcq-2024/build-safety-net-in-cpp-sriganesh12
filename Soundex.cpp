@@ -39,7 +39,7 @@ int isCodeAndPrevCodeNotSame(char& code, char& prevCode)
 
 void updateSoundex(std::string& soundex, char& code, char& prevCode)
 {
-    int isProperCode = isCodeNotVowel(code) && isCodeNotRepetive(code) && isCodeAndPrevCodeNotSame(code, prevCode);
+    int isProperCode = isCodeNotVowel(code) * isCodeNotRepetive(code) * isCodeAndPrevCodeNotSame(code, prevCode);
     if (isProperCode)
     {
         soundex += code;
