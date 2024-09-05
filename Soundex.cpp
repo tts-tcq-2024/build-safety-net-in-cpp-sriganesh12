@@ -19,15 +19,35 @@ void initializeSoundexCode()
     soundexValue['L' - 'A'] = '4';
     soundexValue['M' - 'A'] = soundexValue['N' - 'A'] = '5';
     soundexValue['R' - 'A'] = '6';
-    soundexValue['H' - 'A'] = soundexValue['W' - 'A'] = soundexValue['Y' - 'A'] = '0';
+    soundexValue['H' - 'A'] = soundexValue['W' - 'A'] = soundexValue['Y' - 'A'] = '*';
+}
+
+int isCodeNotVowel(char& code)
+{
+    return code != '0';
+}
+
+int isCodeNotRepetive(char& code)
+{
+    return code != '*';
+}
+
+int isCodeAndPrevCodeNotSame(char& code, char& prevCode)
+{
+    return code != prevCode;
 }
 
 void updateSoundex(std::string& soundex, char& code, char& prevCode)
 {
-    if ((code != '0') && (code != prevCode))
+    int isProperCode = isCodeNotVowel(code) && isCodeNotRepetive(code) && isCodeAndPrevCodeNotSame(code, prevCode);
+    if (isProperCode)
     {
         soundex += code;
         prevCode = code;
+    }
+    if (code == '0')
+    {
+        prevCode = '0'; 
     }
 }
 
