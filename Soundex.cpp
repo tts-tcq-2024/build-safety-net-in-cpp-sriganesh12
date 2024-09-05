@@ -19,20 +19,15 @@ void initializeSoundexCode()
     soundexValue['L' - 'A'] = '4';
     soundexValue['M' - 'A'] = soundexValue['N' - 'A'] = '5';
     soundexValue['R' - 'A'] = '6';
-    soundexValue['H' - 'A'] = soundexValue['W' - 'A'] = soundexValue['Y' - 'A'] = '*';
+    soundexValue['H' - 'A'] = soundexValue['W' - 'A'] = soundexValue['Y' - 'A'] = '0';
 }
 
 void updateSoundex(std::string& soundex, char& code, char& prevCode)
 {
-    bool isProperCode = (code != '0') && (code != '*') && (code != prevCode);
-    if (isProperCode)
+    if ((code != '0') && (code != prevCode))
     {
         soundex += code;
         prevCode = code;
-    }
-    else if (code == '0')
-    {
-        prevCode = '0'; 
     }
 }
 
