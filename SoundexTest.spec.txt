@@ -1,0 +1,53 @@
+Test case scenario for soundex
+
+Template:
+case <serial number>: <Test description>
+*   Given:
+*   When:
+*   Then: 
+Input                Output
+
+Case 1: An empty string return empty
+*   Given:  An Empty string
+*   When:   generateSoundex is called with given string
+*   Then:   Returns an empty string
+Input                Output
+""                   ""
+
+Case 2: A Single Character string should return the same character with Appending Zeros
+*   Given:  A single character string
+*   When:   generateSoundex is called with given string
+*   Then:   Returns string of single charater appended with 3 zeros
+Input                Output
+ A					         A000
+ B					         B000
+ D                   D000
+
+ Case 3: A string of uppercase characters needs to be mapped to soundex algorithm
+*   Given:  A string of uppercase characters
+*   When:   generateSoundex is called with given string
+*   Then:   Returns string that matches the soundex code
+Input                Output
+ROBERT               R163
+TYMCZAK              T522
+ASHCRAFT             A261
+
+ Case 4: A string of Lowercase characters needs to converted to uppercase and soundex algorithm is mapped
+*   Given:  A string of lowercase characters
+*   When:   generateSoundex is called with given string
+*   Then:   Returns string that matches the soundex code after converting all the characters to uppercase
+Input                        Output
+robert                       R163
+tymczak                      T522
+ashcraft                     A261
+abcdefghijklmnopqrstuvwxyz   A123
+
+ Case 5: A string of mixed Lowercase and uppercase characters needs to convert all characters to uppercase and soundex algorithm is mapped
+*   Given:  A string of lowercase characters
+*   When:   generateSoundex is called with given string
+*   Then:   Returns string that matches the soundex code after converting all the characters to uppercase
+Input                        Output
+Tymczak                      T522
+RuPeRt                       R163
+Aeiouhw                      A000
+RoBErt                       R163
